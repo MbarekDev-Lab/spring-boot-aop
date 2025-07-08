@@ -1,5 +1,6 @@
 package com.mbarekDev.aopdemo;
 
+import com.mbarekDev.aopdemo.dao.AccountDAO;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,12 +14,17 @@ public class AopdemoApplication {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(String[] args) {
+    public CommandLineRunner commandLineRunner(AccountDAO theAccountDFAO) {
 
         return runner -> {
-            System.out.println("hello world");
+            demoTheBeforeAdvice(theAccountDFAO);
         };
 
+    }
+
+    private void demoTheBeforeAdvice(AccountDAO theAccountDFAO) {
+        // call the business method
+        theAccountDFAO.addAccount();
     }
 
 
