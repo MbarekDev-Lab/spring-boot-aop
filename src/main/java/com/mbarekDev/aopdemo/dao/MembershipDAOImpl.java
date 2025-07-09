@@ -3,7 +3,7 @@ package com.mbarekDev.aopdemo.dao;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MembershipDAOImpl implements MembershipDAO{
+public class MembershipDAOImpl implements MembershipDAO {
 
 //    @Override
 //    public void addAccount() {
@@ -11,7 +11,8 @@ public class MembershipDAOImpl implements MembershipDAO{
 //    }
 
     @Override
-    public void addOtherAddMethod() {
+    public boolean addOtherAddMethod() {
         System.out.println(getClass() + "DOING DB WORK ADDING A MEMBERSHIP ACCOUNT ");
+        return true;
     }
 }
