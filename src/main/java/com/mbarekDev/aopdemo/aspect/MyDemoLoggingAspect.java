@@ -15,7 +15,9 @@ public class MyDemoLoggingAspect {
     //start with an @Bedfor advice
     //@Before("execution(public void updateAccount())")
 
-    @Before("execution(public void addAccount())")
+    //@Before("execution(public void com.mbarekDev.aopdemo.dao.addAccount())")
+
+    @Before("execution(public void add*())")
     public void beforeAddAccountAdvice(){
 
         System.out.println("\n ----> Executing @Before advice on addAccount() ");
