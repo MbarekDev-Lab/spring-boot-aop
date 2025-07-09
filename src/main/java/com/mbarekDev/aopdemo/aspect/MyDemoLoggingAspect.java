@@ -13,6 +13,7 @@ public class MyDemoLoggingAspect {
 
 
     //start with an @Bedfor advice
+    //@Before("execution(public void updateAccount())")
 
     @Before("execution(public void addAccount())")
     public void beforeAddAccountAdvice(){
