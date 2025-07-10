@@ -23,14 +23,15 @@ public class AopdemoApplication {
 
     }
 
-    private void demoTheBeforeAdvice(AccountDAO theAccountDFAO, MembershipDAO theMembershipDAO ) {
+    private void demoTheBeforeAdvice(AccountDAO theAccountDFAO, MembershipDAO theMembershipDAO) {
         // call the business method
         Account myAccount = new Account();
-        theAccountDFAO.addAccount(myAccount);
+        theAccountDFAO.addAccount(myAccount, true);
+        theAccountDFAO.doWork();
 
         //call the membership business method
         theMembershipDAO.addOtherAddMethod();
-
+        theMembershipDAO.goToSleep();
     }
 
 

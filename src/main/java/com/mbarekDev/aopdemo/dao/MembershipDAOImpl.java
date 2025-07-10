@@ -15,4 +15,10 @@ public class MembershipDAOImpl implements MembershipDAO {
         System.out.println(getClass() + "DOING DB WORK ADDING A MEMBERSHIP ACCOUNT ");
         return true;
     }
+
+    @Override
+    public void goToSleep() {
+        System.out.println(getClass() + "I am going to sleep... ");
+
+    }
 }

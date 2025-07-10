@@ -16,8 +16,8 @@ public class MyDemoLoggingAspect {
     //@Before("execution(public void updateAccount())")
 
     //@Before("execution(public void com.mbarekDev.aopdemo.dao.addAccount())")
-
-    @Before("execution(* add*(com.mbarekDev.aopdemo.Account))")
+// .. -> means match on any number of argumennts () use param wildcards
+    @Before("execution(* com.mbarekDev.aopdemo.dao.*.*(..))")
     public void beforeAddAccountAdvice(){
         System.out.println("\n ----> Executing @Before advice on addAccount() ");
     }
