@@ -2,7 +2,12 @@ package com.mbarekDev.aopdemo.dao;
 
 import com.mbarekDev.aopdemo.Account;
 
+import java.util.List;
+
 public interface AccountDAO {
+    // add a new method: findAccounts()
+    List<Account> findAccounts();
+
     void addAccount(Account theAccount, boolean vipFlag);
 
     boolean doWork();

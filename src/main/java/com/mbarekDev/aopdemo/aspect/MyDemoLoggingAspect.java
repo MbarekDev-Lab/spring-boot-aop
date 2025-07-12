@@ -3,12 +3,14 @@ package com.mbarekDev.aopdemo.aspect;
 
 import com.mbarekDev.aopdemo.Account;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 @Aspect
@@ -17,9 +19,27 @@ import org.springframework.stereotype.Component;
 public class MyDemoLoggingAspect {
 
 
+    //add new advice for @AfterReturning on the findAccounts method
+    @AfterReturning(
+            pointcut = "execution(* com.mbarekDev.aopdemo.dao.findAccounts(..))",
+            returning = "result"
+    )
+    public void afterReturningFindAccountsAdvice(JoinPoint theJoinPoint, List<Account> result) {
+        // print out which method we are advising on
+        String method = theJoinPoint.getSignature().toShortString();
+
+        System.out.println("\n -----> Executing @AfterReturning on method : " + method);
+
+        // print out the resuls of the method call
+        System.out.println("\n -----> result is : " + result);
+
+    }
+
+
     @Before("com.mbarekDev.aopdemo.aspect.AopExpressions.forDaoPackageNoGetterSetter()")
     public void beforeAddAccountAdvice(JoinPoint theJoinPoint) {
         System.out.println("\n ----> Executing @Before advice on addAccount() ");
+
         // display the method signature
         MethodSignature methodSignature = (MethodSignature) theJoinPoint.getSignature();
         System.out.println("Method: " + methodSignature);
@@ -28,7 +48,7 @@ public class MyDemoLoggingAspect {
         // get args
         Object[] args = theJoinPoint.getArgs();
 
-        // loop thru args
+        // loop through args
         for (Object tempArg : args) {
             System.out.println(tempArg);
             if (tempArg instanceof Account) {
