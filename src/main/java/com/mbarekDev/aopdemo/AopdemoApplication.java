@@ -31,15 +31,12 @@ public class AopdemoApplication {
         // call method to find the Accounts
         List<Account> theAccounts = null;
         try {
-            // add a boolean flag to siomulate exceptions
-
+            // add a boolean flag to simulate exceptions
             boolean tripWire = true;
-
             theAccounts = theAccountDFAO.findAccounts(tripWire);
 
         } catch (Exception exception) {
             System.out.println(" Main Program : caught exception :  " + exception);
-
         }
 
         // display the Accounts
