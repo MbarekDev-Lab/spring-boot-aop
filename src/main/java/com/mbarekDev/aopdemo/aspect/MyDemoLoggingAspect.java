@@ -3,6 +3,7 @@ package com.mbarekDev.aopdemo.aspect;
 
 import com.mbarekDev.aopdemo.Account;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
@@ -15,6 +16,69 @@ import java.util.List;
 @Component
 @Order(2)
 public class MyDemoLoggingAspect {
+
+
+    @Around("execution(* com.mbarekDev.aopdemo.service.*.getFortune(..))")
+    public Object aroundGetFortune(ProceedingJoinPoint theProceedingJoinPoint) throws Throwable {
+
+        String method = theProceedingJoinPoint.getSignature().toShortString();
+        System.out.println("\n====> Executing @Around on method: " + method);
+
+        long begin = System.nanoTime();
+
+        Object result;
+
+        try {
+            // Proceed with the actual method
+            result = theProceedingJoinPoint.proceed();
+        } catch (Exception ex) {
+            System.out.println("\n====> Exception caught in @Around: " + ex.getMessage());
+
+            // Optionally: log the exception, alert, etc.
+            result = "System busy. Please try again later.";
+
+            // Optionally rethrow if you want to propagate
+            // throw ex;
+        }
+
+        long end = System.nanoTime();
+        long duration = end - begin;
+        System.out.println("Duration: " + (duration / 1_000_000) + " ms");
+
+        return result;
+    }
+
+
+    /*@Around("execution(* com.mbarekDev.aopdemo.service.*.getFortune(..))")
+    public Object aroundGetFortune2(ProceedingJoinPoint theProceedingJoinPoint) throws Throwable {
+        // print outmethiod we are advising on
+        String method = theProceedingJoinPoint.getSignature().toShortString();
+        System.out.println("\n====> Executing @After (finally) on method: " + method);
+
+        //get begin timestamp
+        //long begin = System.currentTimeMillis();
+        long begin = System.nanoTime();
+
+        //now, execute the method
+        Object result = null;
+        try {
+            result = theProceedingJoinPoint.proceed();
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+            result = "  exception  to notify the user ---->  ";
+        }
+
+        // get end timestump
+        //long end = System.currentTimeMillis();
+        long end = System.nanoTime();
+
+        // compute duration and display it
+        long duration = end - begin;
+
+        System.out.println("\n ---Duration : " + duration  + " seconds");
+
+        return result;
+    }*/
 
     @After("execution(* com.mbarekDev.aopdemo.dao.AccountDAO.findAccounts(..))")
     public void afterFinallyFindAccountsAdvice(JoinPoint theJoinPoint) {

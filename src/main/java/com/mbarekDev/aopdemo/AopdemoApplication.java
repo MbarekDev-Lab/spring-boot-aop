@@ -3,6 +3,7 @@ package com.mbarekDev.aopdemo;
 import com.mbarekDev.aopdemo.dao.AccountDAO;
 import com.mbarekDev.aopdemo.dao.AccountDAOImpl;
 import com.mbarekDev.aopdemo.dao.MembershipDAO;
+import com.mbarekDev.aopdemo.service.TrafficFortuneService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,21 +18,51 @@ public class AopdemoApplication {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(AccountDAO theAccountDFAO, MembershipDAO theMembershipDAO) {
+    public CommandLineRunner commandLineRunner(
+            AccountDAO theAccountDFAO,
+            MembershipDAO theMembershipDAO,
+            TrafficFortuneService theTrafficFortuneService
+
+    ) {
 
         return runner -> {
             //demoTheBeforeAdvice(theAccountDFAO, theMembershipDAO);
             // demoTheAfterReturningAdvice(theAccountDFAO);
             //demoTheAfterThrowingAdvice(theAccountDFAO);
-            demoTheAfterAdvice(theAccountDFAO);
+            //demoTheAfterAdvice(theAccountDFAO);
+            //demoTheAroundAdvice(theTrafficFortuneService);
+            demoTheAroundAdviceHandlingExeption(theTrafficFortuneService);
 
         };
     }
 
+    private void demoTheAroundAdviceHandlingExeption(TrafficFortuneService theTrafficFortuneService) {
+        System.out.println("\nMain Program : demoTheAroundAdviceHandlingExeption ");
+        System.out.println("Calling getFortuneService");
+
+        boolean theTripWire = true;
+        String data = theTrafficFortuneService.getFortune(theTripWire);
+        System.out.println("\n My fottune is :  " + data);
+
+        System.out.println(" Finished ");
+    }
+
+    private void demoTheAroundAdvice(TrafficFortuneService theTrafficFortuneService) {
+        System.out.println("\nMain Program : demoTheAroundAdvice ");
+        System.out.println("Calling getFortuneService");
+
+        String data = theTrafficFortuneService.getFortune();
+        System.out.println("\n My fottune is :  " + data);
+
+        System.out.println(" Finished ");
+
+    }
+
     private void demoTheAfterAdvice(AccountDAO theAccountDFAO) {
-        // call method to find the Accounts
-        List<Account> theAccounts = null;
         try {
+            // call method to find the Accounts
+            List<Account> theAccounts = null;
+
             // add a boolean flag to simulate exceptions
             boolean tripWire = false;
             theAccounts = theAccountDFAO.findAccounts(tripWire);
@@ -44,7 +75,7 @@ public class AopdemoApplication {
         System.out.println(" Main Program : demoTheAfterThrowingAdvice  :  ");
         System.out.println("------------");
 
-        System.out.println(theAccounts);
+        //System.out.println(theAccounts);
         System.out.println("\n");
 
     }
