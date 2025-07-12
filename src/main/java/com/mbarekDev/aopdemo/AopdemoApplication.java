@@ -21,8 +21,33 @@ public class AopdemoApplication {
 
         return runner -> {
             //demoTheBeforeAdvice(theAccountDFAO, theMembershipDAO);
-            demoTheAfterReturningAdvice(theAccountDFAO);
+            // demoTheAfterReturningAdvice(theAccountDFAO);
+            demoTheAfterThrowingAdvice(theAccountDFAO);
+
         };
+    }
+
+    private void demoTheAfterThrowingAdvice(AccountDAO theAccountDFAO) {
+        // call method to find the Accounts
+        List<Account> theAccounts = null;
+        try {
+            // add a boolean flag to siomulate exceptions
+
+            boolean tripWire = true;
+
+            theAccounts = theAccountDFAO.findAccounts(tripWire);
+
+        } catch (Exception exception) {
+            System.out.println(" Main Program : caught exception :  " + exception);
+
+        }
+
+        // display the Accounts
+        System.out.println(" Main Program : demoTheAfterThrowingAdvice  :  ");
+        System.out.println("------------");
+
+        System.out.println(theAccounts);
+        System.out.println("\n");
     }
 
     private void demoTheAfterReturningAdvice(AccountDAO theAccountDFAO) {
@@ -34,7 +59,6 @@ public class AopdemoApplication {
         System.out.println("------------");
 
         System.out.println(theAccounts);
-
         System.out.println("\n");
     }
 

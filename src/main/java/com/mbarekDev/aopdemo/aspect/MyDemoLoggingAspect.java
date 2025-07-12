@@ -17,8 +17,6 @@ import java.util.List;
 @Component
 @Order(2)
 public class MyDemoLoggingAspect {
-
-
     //add new advice for @AfterReturning on the findAccounts method
     @AfterReturning(
             pointcut = "execution(* com.mbarekDev.aopdemo.dao.findAccounts(..))",
@@ -33,6 +31,21 @@ public class MyDemoLoggingAspect {
         // print out the resuls of the method call
         System.out.println("\n -----> result is : " + result);
 
+        // let's post-process the data ... and modify is.
+        // convert the account names to uppercase
+        convertAccountNameToUppercase(result);
+
+    }
+
+    private void convertAccountNameToUppercase(List<Account> resultList) {
+        // loop throught accounts
+        for (Account tempAccount : resultList) {
+            // get an uppercase version of name
+            String theUpperCase = tempAccount.getName().toUpperCase();
+
+            // update the name on the account
+            tempAccount.setName(theUpperCase);
+        }
     }
 
 
@@ -59,12 +72,13 @@ public class MyDemoLoggingAspect {
                 System.out.println("account level : " + theAccount.getLevel());
             }
         }
+
+
     }
 
     private static void extracted(Account tempArg) {
         Account theAccount = tempArg;
     }
-
     //-> means match on any number of argumennts () use param wildcards
     // step1, Create pointcut declaration
     //    @Before("forDaoPackage()")
